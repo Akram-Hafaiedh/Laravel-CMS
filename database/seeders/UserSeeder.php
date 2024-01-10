@@ -19,19 +19,21 @@ class UserSeeder extends Seeder
 
         $adminRole = Role::where('name', 'Admin')->first();
         $editorRole = Role::where('name', 'Editor')->first();
-        User::create([
+        $userRole =Role::where('name', 'User')->first();
+        $editor = User::create([
             'name' => 'Editor User',
             'email' => 'editor@example.com',
             'password' => Hash::make('password'), // Use a secure password in production
-            'role_id' => $editorRole->id // Assign the editor role to this user
+            // 'role_id' => $editorRole->id // Assign the editor role to this user
         ]);
-
-        User::create([
+        $editor->roles()->attach($editorRole);
+        $admin = User::create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'), // Use a secure password in production
-            'role_id' => $adminRole->id // Assign the admin role to this user
+            // 'role_id' => $adminRole->id // Assign the admin role to this user
         ]);
+        $admin->roles()->attach($adminRole);
 
     }
 }
